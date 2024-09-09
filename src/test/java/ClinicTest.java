@@ -1,19 +1,60 @@
+import static org.junit.Assert.assertEquals;
+
 import org.example.Clinic;
 import org.example.TriageType;
 import org.example.VisibleSymptom;
-import org.junit.Assert;
 import org.junit.Test;
 
 public class ClinicTest {
+	
     @Test
-    public void givenAFullFifoClinic_whenOnePatientHasMigraine_thenPatientIsFirstInDoctorQueue() {
-        // Arrange
+    public void givenAFullFifoClinic_whenOnePatientHasMigraine_thenRadiologieSizeIsZero() {
         Clinic clinic = new Clinic(TriageType.FIFO, TriageType.FIFO);
 
-        // Act
         clinic.triagePatient("John", 4, VisibleSymptom.MIGRAINE);
 
-        // Assert
-        Assert.assertEquals(1, clinic.getDoctorQueue().size());
+        assertEquals(0, clinic.getRadiologieList().size());
     }
+    
+    @Test
+    public void givenAFullFifoClinic_whenTwoPatient_thenQueueSizeIsTwo() {
+        Clinic clinic = new Clinic(TriageType.FIFO, TriageType.FIFO);
+
+        clinic.triagePatient("John", 4, VisibleSymptom.MIGRAINE);
+        
+        clinic.triagePatient("Mark", 4, VisibleSymptom.FLU);
+
+        assertEquals(2, clinic.getPatientList().size());
+    }
+    
+    @Test
+    public void givenAFullFifoClinic_whenTwoPatient_thenPatientOrderInDoctorQueue() {
+        Clinic clinic = new Clinic(TriageType.FIFO, TriageType.FIFO);
+
+        clinic.triagePatient("John", 4, VisibleSymptom.MIGRAINE);
+        
+        clinic.triagePatient("Mark", 4, VisibleSymptom.FLU);
+
+        assertEquals("John", clinic.getPatientList().get(0));
+        assertEquals("Mark", clinic.getPatientList().get(1));
+    }
+    
+    @Test
+    public void givenAFullFifoClinic_whenPatientHasSprain_thenRadiologieQueueSizeIsOne() {
+        Clinic clinic = new Clinic(TriageType.FIFO, TriageType.FIFO);
+
+        clinic.triagePatient("John", 4, VisibleSymptom.SPRAIN);
+
+        assertEquals(1, clinic.getRadiologieList().size());
+    }
+    
+    @Test
+    public void givenAFullFifoClinic_whenPatientHasSprain_thenPatientIsFirstInRadiologieQueue() {
+        Clinic clinic = new Clinic(TriageType.FIFO, TriageType.FIFO);
+
+        clinic.triagePatient("John", 4, VisibleSymptom.SPRAIN);
+
+        assertEquals("John", clinic.getRadiologieList().get(0));
+    }
+    
 }

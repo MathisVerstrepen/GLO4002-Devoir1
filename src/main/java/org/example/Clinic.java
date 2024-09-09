@@ -1,41 +1,31 @@
 package org.example;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Clinic {
-    private final TriageType doctorTriageType;
-    private final TriageType radiologyTriageType;
-
-    private final Queue<Patient> doctorQueue;
-    private final Queue<Patient> radiologyQueue;
+    
+    private List<String> doctorList;
+    private List<String> radiologieList;
 
     public Clinic(TriageType doctorTriageType, TriageType radiologyTriageType) {
-        this.doctorTriageType = doctorTriageType;
-        this.radiologyTriageType = radiologyTriageType;
-        this.doctorQueue = new LinkedList<>();
-        this.radiologyQueue = new LinkedList<>();
+        this.radiologieList = new ArrayList<>();
+        this.doctorList = new ArrayList<>();
     }
 
-    public void triagePatient(String name, int gravity, VisibleSymptom visibleSymptom) {
-        Patient patient = new Patient(name, gravity, visibleSymptom);
+	public void triagePatient(String name, int gravity, VisibleSymptom visibleSymptom) {
+		this.doctorList.add(name);
+		
+		if(visibleSymptom == VisibleSymptom.SPRAIN) {
+			this.radiologieList.add(name);
+		}
+	}
+	
+	public List<String> getPatientList() {
+		return this.doctorList;
+	}
 
-        if (this.doctorTriageType == TriageType.FIFO) {
-            doctorQueue.add(patient);
-        }
-
-        if (visibleSymptom == VisibleSymptom.BROKEN_BONE || visibleSymptom == VisibleSymptom.SPRAIN) {
-            if (this.radiologyTriageType == TriageType.FIFO) {
-                radiologyQueue.add(patient);
-            }
-        }
-    }
-
-    public Queue<Patient> getDoctorQueue() {
-        return doctorQueue;
-    }
-
-    public Queue<Patient> getRadiologyQueue() {
-        return radiologyQueue;
-    }
+	public List<String> getRadiologieList() {
+		return this.radiologieList;
+	}
 }
