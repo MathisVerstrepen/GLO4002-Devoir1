@@ -43,5 +43,21 @@ public class ClinicTest {
         assertEquals(1, clinic.getRadiologieAttenteSize());
     }
     
+    @Test
+	public void givenAFullFifoClinic_whenOnePatientHasCovid_thenPatientAttenteSizeDoctorSizeIsZero() {
+    	Clinic clinic = new Clinic(TriageType.FIFO, TriageType.FIFO);
+		
+    	clinic.triagePatient("John", 4, VisibleSymptom.CORONAVIRUS);
+		
+		assertEquals(0, clinic.getDoctorAttenteSize());
+	}
     
+    @Test
+	public void givenAFullFifoClinic_whenOnePatientHasCovid_thenPatientAttenteSizeRadiologieSizeIsZero() {
+    	Clinic clinic = new Clinic(TriageType.FIFO, TriageType.FIFO);
+		
+    	clinic.triagePatient("John", 4, VisibleSymptom.CORONAVIRUS);
+		
+		assertEquals(0, clinic.getRadiologieAttenteSize());
+	}
 }

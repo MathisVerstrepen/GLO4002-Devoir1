@@ -11,6 +11,8 @@ public class Clinic {
 
 	public void triagePatient(String name, int gravity, VisibleSymptom visibleSymptom) {
 		
+		if(visibleSymptom == VisibleSymptom.CORONAVIRUS) return;
+		
 		doctorAttente.addPersone(name, gravity);
 		
 		if(visibleSymptom == VisibleSymptom.SPRAIN) {
