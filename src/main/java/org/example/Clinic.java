@@ -1,45 +1,37 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Clinic {
-    private final TriageType doctorTriageType;
-    private final TriageType radiologyTriageType;
-    
-    private List<String> doctorList;
-    private List<String> radiologieList;
+	private Attente doctorAttente;
+	private Attente radiologieAttente;
 
     public Clinic(TriageType doctorTriageType, TriageType radiologyTriageType) {
-        this.doctorTriageType = doctorTriageType;
-        this.radiologyTriageType = radiologyTriageType;
-        
-        this.radiologieList = new ArrayList<>();
-        this.doctorList = new ArrayList<>();
+        this.doctorAttente = new Attente(doctorTriageType);
+        this.radiologieAttente = new Attente(radiologyTriageType);
     }
 
 	public void triagePatient(String name, int gravity, VisibleSymptom visibleSymptom) {
 		
-		if (doctorTriageType == TriageType.GRAVITY && gravity > 5) {
-			this.doctorList.addFirst(name);
-		} else {
-			this.doctorList.add(name);
-		}
+		doctorAttente.addPersone(name, gravity);
 		
 		if(visibleSymptom == VisibleSymptom.SPRAIN) {
-			if (radiologyTriageType == TriageType.GRAVITY && gravity > 5) {
-				this.radiologieList.addFirst(name);
-			} else {
-				this.radiologieList.add(name);
-			}
+			radiologieAttente.addPersone(name, gravity);
 		}
 	}
 	
-	public List<String> getPatientList() {
-		return this.doctorList;
+	public String getDoctorPatient(int index) {
+		return this.doctorAttente.getElement(index);
 	}
-
-	public List<String> getRadiologieList() {
-		return this.radiologieList;
+	
+	public String getRadiologiePatient(int index) {
+		return this.radiologieAttente.getElement(index);
 	}
+	
+	public int getDoctorAttenteSize() {
+		return this.doctorAttente.getSize();
+	}
+	
+	public int getRadiologieAttenteSize() {
+		return this.radiologieAttente.getSize();
+	}
+	
 }
