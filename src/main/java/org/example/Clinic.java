@@ -27,7 +27,11 @@ public class Clinic {
 		}
 		
 		if(visibleSymptom == VisibleSymptom.SPRAIN) {
-			this.radiologieList.add(name);
+			if (radiologyTriageType == TriageType.GRAVITY && gravity > 5) {
+				this.radiologieList.addFirst(name);
+			} else {
+				this.radiologieList.add(name);
+			}
 		}
 	}
 	

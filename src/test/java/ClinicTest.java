@@ -77,4 +77,24 @@ public class ClinicTest {
         assertEquals(2, clinic.getPatientList().size());
     }
     
+    @Test
+    public void givenARadiologieGravityClinicWithLowGravityClient_whenSecondPatientHaveHighGravity_thenHighGravityPatientIsFirstInRadiologieList() {
+        Clinic clinic = new Clinic(TriageType.FIFO, TriageType.GRAVITY);
+        clinic.triagePatient("John", 4, VisibleSymptom.SPRAIN);
+
+        clinic.triagePatient("Mark", 6, VisibleSymptom.SPRAIN);
+
+        assertEquals("Mark", clinic.getRadiologieList().get(0));
+    }
+    
+    @Test
+    public void givenARadiologieGravityClinicWithLowGravityClient_whenSecondPatientHaveHighGravity_thenTwoPatientInRadiologieList() {
+        Clinic clinic = new Clinic(TriageType.FIFO, TriageType.GRAVITY);
+        clinic.triagePatient("John", 4, VisibleSymptom.SPRAIN);
+
+        clinic.triagePatient("Mark", 6, VisibleSymptom.SPRAIN);
+
+        assertEquals(2, clinic.getRadiologieList().size());
+    }
+    
 }
